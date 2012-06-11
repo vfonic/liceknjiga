@@ -6,6 +6,8 @@ Liceknjiga::Application.routes.draw do
   end
 
   resources :users
+  resources :photos, :has_many => :comments
+  resources :comments, :belongs_to => :photos
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -16,6 +16,39 @@
   <dd><%= image_tag @photo.photo_data.url(:small) %></dd>
 </dl>
 
+<% if !@photo.comments.empty? %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= %></th>
+      <th><%= %></th>
+      <th><%= %></th>
+      <th><%= %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @photo.comments.each do |comment| %>
+      <tr>
+        <td><%= %></td>
+        <td><%= %></td>
+        <td><%= %></td>
+        <td><%= %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= form_for @new_comment do |f| %>
+  <div class="control-group">
+    <%= f.label :content, "Comment", :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :content, :size => '15x4' %>
+    </div>
+  </div>
+  <%= f.submit "Post", :class => 'btn btn-primary' %>
+<% end %>
+
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               photos_path, :class => 'btn'  %>

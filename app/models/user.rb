@@ -5,7 +5,9 @@ class User < ActiveRecord::Base
   attr_accessor :password
   
   has_many :photos, :foreign_key => "creator_id"
-  
+
+  has_many :comments
+
   has_many :photos_likes
   has_many :likes, :through => :photos_likes, :source => :photo
   

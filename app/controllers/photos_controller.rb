@@ -29,6 +29,7 @@ class PhotosController < ApplicationController
   def show
     @photo = Photo.find(params[:id])
     @photo_liked = @photo.photos_likes.find_by_user_id(session[:user_id])
+    @new_comment = Comment.new(:photo_id => @photo.id)
 
     respond_to do |format|
       format.html # show.html.erb
