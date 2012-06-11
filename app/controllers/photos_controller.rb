@@ -28,7 +28,7 @@ class PhotosController < ApplicationController
   # GET /photos/1.json
   def show
     @photo = Photo.find(params[:id])
-    @photo_liked = @photo.photos_users.find_by_user_id(session[:user_id])
+    @photo_liked = @photo.photos_likes.find_by_user_id(session[:user_id])
 
     respond_to do |format|
       format.html # show.html.erb
