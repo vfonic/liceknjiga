@@ -1,4 +1,4 @@
-class PhotosLike < ActiveRecord::Base
+class PhotosUser < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :photo

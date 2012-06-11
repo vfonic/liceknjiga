@@ -24,12 +24,12 @@ ActiveRecord::Schema.define(:version => 20120611095942) do
     t.datetime "photo_data_updated_at"
   end
 
-  create_table "photos_likes", :id => false, :force => true do |t|
-    t.integer "user_id"
+  create_table "photos_users", :id => false, :force => true do |t|
     t.integer "photo_id"
+    t.integer "user_id"
   end
 
-  add_index "photos_likes", ["user_id", "photo_id"], :name => "index_photos_likes_on_user_id_and_photo_id"
+  add_index "photos_users", ["user_id", "photo_id"], :name => "index_photos_users_on_user_id_and_photo_id"
 
   create_table "users", :force => true do |t|
     t.string   "first_name",          :limit => 25

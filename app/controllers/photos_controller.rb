@@ -1,5 +1,18 @@
 
 class PhotosController < ApplicationController
+
+  def like
+    @photo = Photo.find(params[:id])
+    @photo.likes << User.find(session[:user_id])
+    redirect_to ({:action => 'show', :id => @photo.id})
+  end
+
+  def unlike
+    @photo = Photo.find(params[:id])
+    @photo.likes.delete(User.find(session[:user_id]))
+    redirect_to ({:action => 'show', :id => @photo.id})
+  end
+
   # GET /photos
   # GET /photos.json
   def index
@@ -15,6 +28,7 @@ class PhotosController < ApplicationController
   # GET /photos/1.json
   def show
     @photo = Photo.find(params[:id])
+    @photo_liked = @photo.photos_users.find_by_user_id(session[:user_id])
 
     respond_to do |format|
       format.html # show.html.erb

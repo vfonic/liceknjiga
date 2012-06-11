@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
   
   has_many :photos, :foreign_key => "creator_id"
   
-  has_many :photos_likes
+  has_many :photos_users
+  has_many :likes, :through => :photos_users, :source => :photo
   
   has_many :users_friends
   has_many :friends, :through => :users_friends
