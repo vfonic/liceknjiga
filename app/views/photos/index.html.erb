@@ -1,0 +1,11 @@
+<%- model_class = Photo.new.class -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+</div>
+<ul class="thumbnails">
+<% @photos.each do |photo| %>
+  <li>
+    <%= link_to(image_tag(photo.photo_data.url(:small)), {:action => 'show', :id => photo.id}) %>
+  </li>
+<% end %>
+</ul>

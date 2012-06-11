@@ -1,0 +1,35 @@
+<%- model_class = User.new.class -%>
+<div class="page-header">
+  <h1>Search</h1>
+</div>
+
+<h2>Showing results for: '<%= params[:query] %>'</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:first_name) %></th>
+      <th><%= model_class.human_attribute_name(:last_name) %></th>
+      <th><%= model_class.human_attribute_name(:email) %></th>
+      <th><%= model_class.human_attribute_name(:username) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.username %></td>
+        <td>
+          <% if user.friends.include? @user %>
+            <%= link_to "Remove Friend", {:controller => 'users', :action => 'remove', :id => user.id}, :class => 'btn btn-danger' %>
+          <% else %>
+            <%= link_to "Add Friend", {:controller => 'users', :action => 'send_request', :id => user.id}, :class => 'btn' %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

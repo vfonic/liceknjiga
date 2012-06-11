@@ -1,0 +1,70 @@
+<%- model_class = User.new.class -%>
+<div class="page-header">
+  <h1>Friends</h1>
+</div>
+
+<% if !@authorized_friends.empty? %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:first_name) %></th>
+      <th><%= model_class.human_attribute_name(:last_name) %></th>
+      <th><%= model_class.human_attribute_name(:email) %></th>
+      <th><%= model_class.human_attribute_name(:username) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @authorized_friends.each do |user| %>
+      <tr>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.username %></td>
+        <td>
+          <%= link_to "Remove", {:action => 'remove', :id => user.id}, :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+<div class="content">
+  No friends! :(
+</div>
+<% end %>
+<hr />
+
+<h2>Friend requests</h2>
+<% if !@unauthorized_friends.empty? %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:first_name) %></th>
+      <th><%= model_class.human_attribute_name(:last_name) %></th>
+      <th><%= model_class.human_attribute_name(:email) %></th>
+      <th><%= model_class.human_attribute_name(:username) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @unauthorized_friends.each do |user| %>
+      <tr>
+        <td><%= user.first_name %></td>
+        <td><%= user.last_name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.username %></td>
+        <td>
+          <%= link_to "Accept", {:action => 'add', :id => user.id}, :class => 'btn btn-mini' %>
+          <%= link_to "Remove", {:action => 'remove', :id => user.id}, :class => 'btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% else %>
+<div class="content">
+  No new friend requests.
+</div>
+<% end %>
+<hr />
