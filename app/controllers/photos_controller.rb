@@ -13,6 +13,15 @@ class PhotosController < ApplicationController
     redirect_to ({:action => 'show', :id => @photo.id})
   end
 
+  def add_comment
+    @comment = Comment.new(params[:comment])
+    @comment.user_id = session[:user_id]
+    if @comment.save
+      flash[:success] = "Comment added!"
+      redirect_to photo_path(params[:comment][:photo_id])
+    end
+  end
+
   # GET /photos
   # GET /photos.json
   def index
@@ -29,7 +38,7 @@ class PhotosController < ApplicationController
   def show
     @photo = Photo.find(params[:id])
     @photo_liked = @photo.photos_likes.find_by_user_id(session[:user_id])
-    @new_comment = Comment.new(:photo_id => @photo.id)
+    @comment = Comment.new
 
     respond_to do |format|
       format.html # show.html.erb

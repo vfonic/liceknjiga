@@ -12,40 +12,35 @@
       <i class="icon-remove"></i>
     <% end %>
   </dd>
-  <dt><strong><%= model_class.human_attribute_name(:photo_data) %>:</strong></dt>
-  <dd><%= image_tag @photo.photo_data.url(:small) %></dd>
+  <dd><%= image_tag @photo.photo_data.url %></dd>
 </dl>
 
 <% if !@photo.comments.empty? %>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th><%= %></th>
-      <th><%= %></th>
-      <th><%= %></th>
-      <th><%= %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @photo.comments.each do |comment| %>
-      <tr>
-        <td><%= %></td>
-        <td><%= %></td>
-        <td><%= %></td>
-        <td><%= %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<b>Comments:</b>
+  <% @photo.comments.each do |comment| %>
+  <div class="span9">
+    <div class="span1">
+      <%= link_to comment.user.full_name, comment.user %><br />
+      <%= link_to(image_tag(comment.user.avatar.url(:thumb)), {:controller => 'users', :action => 'show', :id => comment.user.id}) %>
+    </div>
+    <div class="span2">
+      <%= comment.content %>
+    </div>
+    <div class="span1">
+      <%= comment.created_at %>
+    </div>
+  </div>
+  <% end %>
 <% end %>
 
-<%= form_for @new_comment do |f| %>
+<%= form_for @comment, :url => { :controller => 'photos', :action => "add_comment" } do |f| %>
   <div class="control-group">
     <%= f.label :content, "Comment", :class => 'control-label' %>
     <div class="controls">
       <%= f.text_area :content, :size => '15x4' %>
     </div>
   </div>
+  <%= f.hidden_field :photo_id, {:value => @photo.id} %>
   <%= f.submit "Post", :class => 'btn btn-primary' %>
 <% end %>
 

@@ -10,12 +10,24 @@ class User < ActiveRecord::Base
 
   has_many :photos_likes
   has_many :likes, :through => :photos_likes, :source => :photo
-  
+
+  has_many :comments
+
+  has_many :photo_tags
+  has_many :tags, :through => :photo_tags, :source => :photo
+
+
   has_many :users_friends
   has_many :friends, :through => :users_friends
   has_many :authorized_friends, :through => :users_friends, :source => :friend, :conditions => [ "authorized = ?", true ]
   has_many :unauthorized_friends, :through => :users_friends, :source => :friend, :conditions => [ "authorized = ?", false ]
-#  has_and_belongs_to_many :friends, :class_name => 'User', :foreign_key => 'friend_id', :join_table => 'users_friends'
+
+  has_many :reverse_friendships, :dependent => :destroy,
+                                 :class_name => 'UsersFriend',
+                                 :foreign_key => 'friend_id',
+                                 :conditions => ['authorized = ?', true]
+
+  has_many :reverse_friends, :through => :reverse_friendships, :source => :user
   
   EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
 
@@ -26,7 +38,7 @@ class User < ActiveRecord::Base
   scope :search, lambda {|query| where(["first_name LIKE ? OR last_name LIKE ? OR username LIKE ? OR email LIKE ?", "%#{query}%", "%#{query}%", "%#{query}%", "%#{query}%"])
   }
 
-  has_attached_file :avatar, :styles => { :small => "150x150>", :medium => "300x300>", :thumb => "100x100>" }
+  has_attached_file :avatar, :styles => { :small => "150x150>", :medium => "300x300>", :thumb => "75x75>" }
 
   def full_name
     "#{first_name} #{last_name}"
