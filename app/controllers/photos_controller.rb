@@ -25,7 +25,7 @@ class PhotosController < ApplicationController
   # GET /photos
   # GET /photos.json
   def index
-    @photos = Photo.find(:all, :conditions => ['photos.id IS NOT NULL AND (photos.creator_id = ? OR photos.private = 0)', session[:user_id]])
+    @photos = Photo.find(:all, :conditions => ['photos.id IS NOT NULL AND (photos.creator_id = ? OR photos.private = true)', session[:user_id]])
 
     respond_to do |format|
       format.html # index.html.erb
