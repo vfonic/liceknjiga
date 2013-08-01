@@ -1,3 +1,0 @@
-== Welcome to Liceknjiga
-
-Liceknjiga is a web-application that I made as part of one project on my faculty. It's a photo sharing social network which supports adding friends, tagging, comments, likes and privacy.
